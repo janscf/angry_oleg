@@ -1,0 +1,2 @@
+class MissingComponentException(Exception):
+    pass

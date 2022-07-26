@@ -87,7 +87,7 @@ def test_calculate_distance():
     other_position = Position(7, 5)
 
     # Act
-    distance = position.get_distance(other_position)
+    distance = position.calculate_distance(other_position)
 
     # Assert
     assert distance == 5

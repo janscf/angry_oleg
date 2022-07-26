@@ -23,7 +23,7 @@ class SolidBodyState(ComponentState):
         return self.__position
 
 
-class SolidBody(Component):
+class SolidBody(Component[SolidBodyState]):
     def __init__(self, owner: 'GameObject'):
         super(SolidBody, self).__init__(owner)
 
@@ -31,13 +31,13 @@ class SolidBody(Component):
     def type(self) -> 'ComponentType':
         return ComponentType.SolidBody
 
-    def get_state(self) -> SolidBodyState:
-        position = self._owner.game_context.map.find_object(self._owner.id)
+    def get_state(self, context: 'GameContext') -> SolidBodyState:
+        position = context.map.find_object(self._owner.id)
         return SolidBodyState(position)
 
-    def process_message(self, message: 'GameMessage'):
+    def process_message(self, message: 'GameMessage', context: 'GameContext'):
         if isinstance(message, UpdateStateMessage):
-            self.__detect_collisions(self._owner.game_context)
+            self.__detect_collisions(context)
 
     def __detect_collisions(self, game_context: 'GameContext'):
         game_map = game_context.map

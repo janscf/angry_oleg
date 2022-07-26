@@ -43,11 +43,11 @@ class GameObjectState:
 
 
 class GameObject(ABC):
-    def __init__(self, game_context: 'GameContext'):
+    def __init__(self):
         self.__id = uuid4()
         self._components: List['Component'] = []
-        self._game_context = game_context
         self._messages = deque()
+        self.__state: Optional[GameObjectState] = None
 
     @property
     @abstractmethod
@@ -58,16 +58,8 @@ class GameObject(ABC):
     def id(self) -> UUID:
         return self.__id
 
-    @property
-    def game_context(self) -> 'GameContext':
-        return self._game_context
-
     def get_state(self) -> GameObjectState:
-        return GameObjectState(
-            object_id=self.id,
-            object_type=self.type,
-            component_states=[component.get_state(self._game_context) for component in self._components],
-        )
+        return self.__state
 
     def has_component(self, component_type: 'ComponentType') -> bool:
         return any(c.type == component_type for c in self._components)
@@ -80,8 +72,16 @@ class GameObject(ABC):
     def send_message(self, message: 'GameMessage'):
         self._messages.append(message)
 
-    def update_state(self):
+    def update_state(self, context: 'GameContext'):
+        self.__process_all_message(context)
+        self.__state = GameObjectState(
+            object_id=self.id,
+            object_type=self.type,
+            component_states=[component.get_state(context) for component in self._components],
+        )
+
+    def __process_all_message(self, context: 'GameContext'):
         while self._messages:
             message = self._messages.popleft()
             for component in self._components:
-                component.process_message(message, self._game_context)
+                component.process_message(message, context)

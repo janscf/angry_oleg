@@ -1,7 +1,8 @@
 from typing import TYPE_CHECKING
 
 from lib.game.objects import GameObjectState
-from lib.view.console.controls.screen import Screen
+from lib.view.console.controls import ComponentViewFactory
+from lib.view.console.screen import Screen
 
 if TYPE_CHECKING:
     from lib.game import GameState
@@ -22,9 +23,13 @@ class ConsoleView:
                 continue
 
             self.__show_object_state(object_state)
+            input()
 
     def __show_object_state(self, object_state: 'GameObjectState'):
         for component_state in object_state.component_states:
+            component_view = ComponentViewFactory.create(component_state)
+            if component_view:
+                component_view.show_state()
 
         # direction_submenu = Menu(
         #     menu_items=[

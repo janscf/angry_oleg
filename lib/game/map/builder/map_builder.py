@@ -1,13 +1,16 @@
+import random
 from abc import ABC
-from abc import abstractmethod
-from typing import TYPE_CHECKING
 
-if TYPE_CHECKING:
-    from lib.game import GameContext
-    from lib.game.map.map import Map
+from lib.game.map import Map
+from lib.game.objects.exit import Exit
 
 
 class MapBuilder(ABC):
-    @abstractmethod
-    def get_map(self, game_context: 'GameContext', map_name: str = None) -> 'Map':
-        raise NotImplementedError('Not Implemented')
+    @staticmethod
+    def build_random_map() -> 'Map':
+        size_x = random.randint(1, 30)
+        size_y = random.randint(1, 30)
+        game_map = Map(size_x, size_y)
+
+        game_map.place_object_in_random_position(Exit())
+        return game_map

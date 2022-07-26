@@ -6,11 +6,11 @@ from typing import TYPE_CHECKING
 from uuid import UUID
 from uuid import uuid4
 
+from lib.game.map.builder import MapBuilder
 from lib.game.messages.update_state_message import UpdateStateMessage
 
 if TYPE_CHECKING:
     from lib.game.map import Map
-    from lib.game.map.builder import MapBuilder
     from lib.game.objects import GameObjectState
 
 
@@ -55,12 +55,11 @@ class GameState:
 
 
 class Game:
-    def __init__(self, map_loader: 'MapBuilder'):
+    def __init__(self):
         self.__turn = 0
         self.__start_time: Optional[datetime] = None
         self.__end_time: Optional[datetime] = None
         self.__context = GameContext(self)
-        self.__map_loader = map_loader
         self.__map = None
         self.__player = None
 
@@ -72,7 +71,9 @@ class Game:
         return self.__map
 
     def get_state(self) -> GameState:
-        all_object_states = [game_object.get_state() for game_object in self.__map.get_all_objects()]
+        all_object_states = [
+            game_object.get_state() for game_object in self.__map.get_all_objects()
+        ]
         return GameState(
             turn=self.__turn,
             object_states=all_object_states,
@@ -85,11 +86,11 @@ class Game:
     def is_finished(self) -> bool:
         return self.__end_time is not None
 
-    def start(self, parameters: MatchParameters):
+    def start(self):
         self.__turn = 0
         self.__start_time = datetime.now()
         self.__end_time = None
-        self.__map = self.__map_loader.get_map(self.__context, parameters.map_name)
+        self.__map = MapBuilder.build_random_map()
 
     def end(self):
         self.__end_time = datetime.now()
@@ -98,4 +99,4 @@ class Game:
         self.__turn += 1
         for game_object in self.__map.get_all_objects():
             game_object.send_message(UpdateStateMessage())
-            game_object.update_state()
+            game_object.update_state(self.__context)

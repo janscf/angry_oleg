@@ -11,6 +11,7 @@ from lib.game.components import ComponentType
 from lib.game.messages.update_state_message import UpdateStateMessage
 
 if TYPE_CHECKING:
+    from lib.game import GameContext
     from lib.game.map import Direction
     from lib.game.messages import GameMessage
     from lib.game.objects import GameObject
@@ -24,13 +25,13 @@ class SignalLevel(Enum):
 
 
 @dataclass(frozen=True)
-class TargetDescriptor:
+class TargetSignal:
     direction: 'Direction'
     signal_level: 'SignalLevel'
 
 
 class DetectorState(ComponentState):
-    def __init__(self, targets: Iterable[TargetDescriptor]):
+    def __init__(self, targets: Iterable[TargetSignal]):
         super(DetectorState, self).__init__(ComponentType.Detector)
         self.__targets = targets
 
@@ -39,7 +40,7 @@ class DetectorState(ComponentState):
         return self.__targets
 
 
-class Detector(Component):
+class Detector(Component[DetectorState]):
     HIGH_SIGNAL_RANGE: int = 7
     AVERAGE_SIGNAL_RANGE: int = 12
     LOW_SIGNAL_RANGE: int = 20
@@ -53,23 +54,23 @@ class Detector(Component):
     def type(self) -> 'ComponentType':
         return ComponentType.Detector
 
-    def get_state(self) -> 'ComponentState':
+    def get_state(self, context: 'GameContext') -> DetectorState:
         return DetectorState(targets=self.__targets)
 
-    def process_message(self, message: 'GameMessage'):
+    def process_message(self, message: 'GameMessage', context: 'GameContext'):
         if isinstance(message, UpdateStateMessage):
-            self.__find_targets()
+            self.__find_targets(context)
 
-    def __find_targets(self):
+    def __find_targets(self, context: 'GameContext'):
         self.__targets.clear()
-        game_map = self._owner.game_context.map
+        game_map = context.map
         for game_object in game_map.get_objects_by_type(self.__target_type):
             distance = game_map.get_distance(self._owner.id, game_object.id)
             signal = self.__get_signal_level(distance)
             if signal:
                 direction = game_map.get_direction(self._owner.id, game_object.id)
                 self.__targets.append(
-                    TargetDescriptor(
+                    TargetSignal(
                         direction=direction,
                         signal_level=signal,
                     )

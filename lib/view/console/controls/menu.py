@@ -3,7 +3,7 @@ from typing import List
 from typing import Optional
 from typing import TYPE_CHECKING
 
-from .screen import Screen
+from ..screen import Screen
 
 if TYPE_CHECKING:
     from ...commands import Command

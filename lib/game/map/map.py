@@ -1,3 +1,4 @@
+import random
 from collections import defaultdict
 from dataclasses import dataclass
 from enum import Enum
@@ -133,6 +134,13 @@ class Map:
         self.__objects[game_object.id] = game_object
         self.__map[position].append(game_object.id)
         self.__reversed_map[game_object.id] = position
+
+    def place_object_in_random_position(self, game_object: 'GameObject'):
+        position = Position(
+            x=random.randint(1, self.size_x - 1),
+            y=random.randint(1, self.size_y - 1),
+        )
+        self.place_object(game_object, position)
 
     def remove_object(self, object_id: UUID):
         current_object_position = self.find_object(object_id)

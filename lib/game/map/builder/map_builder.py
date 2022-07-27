@@ -8,8 +8,8 @@ from lib.game.objects.exit import Exit
 class MapBuilder(ABC):
     @staticmethod
     def build_random_map() -> 'Map':
-        size_x = random.randint(1, 30)
-        size_y = random.randint(1, 30)
+        size_x = random.randint(30, 100)
+        size_y = random.randint(30, 100)
         game_map = Map(size_x, size_y)
 
         game_map.place_object_in_random_position(Exit())

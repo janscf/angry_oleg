@@ -1,4 +1,5 @@
 from typing import Any
+from typing import Iterable
 from typing import List
 from typing import Optional
 from typing import TYPE_CHECKING
@@ -17,12 +18,19 @@ class MenuItem:
 
 
 class Menu:
-    def __init__(self, menu_items: List[MenuItem], command: 'Command' = None):
-        self.__menu_items = menu_items
+    def __init__(self, menu_items: List[MenuItem] = None, command: 'Command' = None):
+        self.__menu_items = menu_items or []
         self.selected_item = None
         self.command = command
 
-    def show_dialog(self):
+    @property
+    def menu_items(self) -> Iterable[MenuItem]:
+        return self.__menu_items
+
+    def add_menu_item(self, menu_item: MenuItem):
+        self.__menu_items.append(menu_item)
+
+    def show_dialog(self) -> Any:
         for item in self.__menu_items:
             Screen.display(f'{item.shortcut}. {item.label}')
 

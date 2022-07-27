@@ -13,10 +13,10 @@ from uuid import UUID
 
 from lib.game.exceptions import InvalidWorldSizeException
 from lib.game.exceptions import OutOfMapException
+from lib.game.objects import GameObjectType
 
 if TYPE_CHECKING:
     from lib.game.objects import GameObject
-    from lib.game.objects import GameObjectType
 
 
 class Direction(Enum):
@@ -32,21 +32,21 @@ class Direction(Enum):
     @staticmethod
     def from_offset(dx: int, dy: int) -> Optional['Direction']:
         if dx > 0 and dy > 0:
-            return Direction.NorthEast
-        elif dx > 0 > dy:
-            return Direction.SouthEast
-        elif dx < 0 < dy:
-            return Direction.NorthWest
-        elif dx < 0 and dy < 0:
             return Direction.SouthWest
+        elif dx > 0 > dy:
+            return Direction.NorthWest
+        elif dx < 0 < dy:
+            return Direction.SouthEast
+        elif dx < 0 and dy < 0:
+            return Direction.NorthEast
         elif dx == 0 and dy > 0:
-            return Direction.North
-        elif dx == 0 and dy < 0:
             return Direction.South
+        elif dx == 0 and dy < 0:
+            return Direction.NorthEast
         elif dx > 0 and dy == 0:
-            return Direction.West
-        elif dx < 0 and dy == 0:
             return Direction.East
+        elif dx < 0 and dy == 0:
+            return Direction.West
         return None
 
     def get_normalized_offset(self) -> Tuple[int, int]:
@@ -91,6 +91,7 @@ class Map:
         self.__objects: Dict[UUID, 'GameObject'] = dict()
         self.__map: Dict['Position', List] = defaultdict(list)
         self.__reversed_map: Dict[UUID, 'Position'] = dict()
+        self.__object_types: Dict[GameObjectType, List] = defaultdict(list)
 
     @property
     def size_x(self) -> int:
@@ -107,7 +108,8 @@ class Map:
         return list(self.__objects.values())
 
     def get_objects_by_type(self, object_type: 'GameObjectType') -> Iterable['GameObject']:
-        return [game_object for game_object in self.get_all_objects() if game_object.type == object_type]
+        object_ids = self.__object_types.get(object_type, [])
+        return [self.__objects[object_id] for object_id in object_ids]
 
     def get_objects_in_position(self, position: 'Position') -> Iterable['GameObject']:
         object_ids = self.__map.get(position, [])
@@ -125,8 +127,11 @@ class Map:
         delta_y = position_from.y - position_to.y
         return Direction.from_offset(delta_x, delta_y)
 
+    def is_valid_position(self, position: 'Position') -> bool:
+        return self.__size_x > position.x > 0 and self.__size_y > position.y > 0
+
     def place_object(self, game_object: 'GameObject', position: 'Position'):
-        if position.x >= self.__size_x or position.y >= self.__size_y or position.x < 0 or position.y < 0:
+        if not self.is_valid_position(position):
             raise OutOfMapException(f'Position {position} is out of map bounds')
 
         self.remove_object(game_object.id)
@@ -134,6 +139,7 @@ class Map:
         self.__objects[game_object.id] = game_object
         self.__map[position].append(game_object.id)
         self.__reversed_map[game_object.id] = position
+        self.__object_types[game_object.type].append(game_object.id)
 
     def place_object_in_random_position(self, game_object: 'GameObject'):
         position = Position(
@@ -145,6 +151,8 @@ class Map:
     def remove_object(self, object_id: UUID):
         current_object_position = self.find_object(object_id)
         if current_object_position:
+            game_object = self.__objects[object_id]
             self.__objects.pop(object_id)
             self.__reversed_map.pop(object_id)
-            self.__map.pop(current_object_position)
+            self.__map[current_object_position].remove(object_id)
+            self.__object_types[game_object.type].remove(object_id)

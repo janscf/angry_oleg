@@ -2,6 +2,8 @@ from typing import TYPE_CHECKING
 
 from lib.game.objects import GameObjectState
 from lib.view.console.controls import ComponentViewFactory
+from lib.view.console.controls.menu import Menu
+from lib.view.console.controls.menu import SubMenuItem
 from lib.view.console.screen import Screen
 
 if TYPE_CHECKING:
@@ -9,15 +11,13 @@ if TYPE_CHECKING:
 
 
 class ConsoleView:
+    TURN_NUMBER_MESSAGE = 'Ход {turn_number}'
+
     def show(self, game_state: 'GameState'):
         Screen.clear_console()
-
-        print('-------------------------')
-        print(f'Move #{game_state.turn}')
-        print('-------------------------')
+        Screen.display(self.TURN_NUMBER_MESSAGE.format(turn_number=game_state.turn))
 
         player = game_state.player
-
         for object_state in game_state.object_states:
             if object_state.object_id != player.object_id:
                 continue
@@ -26,27 +26,21 @@ class ConsoleView:
             input()
 
     def __show_object_state(self, object_state: 'GameObjectState'):
+        menu = Menu()
+        component_submenu_index = 1
         for component_state in object_state.component_states:
             component_view = ComponentViewFactory.create(component_state)
             if component_view:
                 component_view.show_state()
+                component_menu = component_view.get_actions_menu()
+                if component_menu:
+                    menu.add_menu_item(
+                        SubMenuItem(
+                            shortcut=str(component_submenu_index),
+                            label=f'{component_state.component_type} menu',
+                            sub_menu=component_menu,
+                        )
+                    )
+                    component_submenu_index += 1
 
-        # direction_submenu = Menu(
-        #     menu_items=[
-        #         MenuItem(
-        #             label=direction.name,
-        #             shortcut=direction.value,
-        #             payload=direction,
-        #         ) for direction in Direction
-        #     ]
-        # )
-        # main_menu = Menu(
-        #     menu_items=[
-        #         SubMenuItem(
-        #             label='Move',
-        #             shortcut='m',
-        #             sub_menu=direction_submenu,
-        #         )
-        #     ]
-        # )
-        # print(main_menu.show_dialog())
+        print(menu.show_dialog())

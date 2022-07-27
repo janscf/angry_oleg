@@ -1,8 +1,10 @@
 from abc import abstractmethod
 from typing import Generic
+from typing import Optional
 from typing import TypeVar
 
 from lib.game.components import ComponentState
+from lib.view.console.controls.menu import Menu
 
 T = TypeVar('T', bound=ComponentState)
 
@@ -18,3 +20,6 @@ class ComponentStateView(Generic[T]):
     @abstractmethod
     def show_state(self):
         raise NotImplementedError('Not implemented')
+
+    def get_actions_menu(self) -> Optional[Menu]:
+        return None

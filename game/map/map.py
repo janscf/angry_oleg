@@ -1,83 +1,20 @@
 import random
 from collections import defaultdict
-from dataclasses import dataclass
-from enum import Enum
-from math import sqrt
 from typing import Dict
 from typing import Iterable
 from typing import List
 from typing import Optional
 from typing import TYPE_CHECKING
-from typing import Tuple
 from uuid import UUID
 
 from game.exceptions import InvalidWorldSizeException
 from game.exceptions import OutOfMapException
-from game.objects import GameObjectType
+from lib.game.enums import Direction
 
 if TYPE_CHECKING:
     from game.objects import GameObject
-
-
-class Direction(Enum):
-    North = 'n'
-    South = 's'
-    West = 'w'
-    East = 'e'
-    NorthWest = 'nw'
-    NorthEast = 'ne'
-    SouthWest = 'sw'
-    SouthEast = 'se'
-
-    @staticmethod
-    def from_offset(dx: int, dy: int) -> Optional['Direction']:
-        if dx > 0 and dy > 0:
-            return Direction.SouthWest
-        elif dx > 0 > dy:
-            return Direction.NorthWest
-        elif dx < 0 < dy:
-            return Direction.SouthEast
-        elif dx < 0 and dy < 0:
-            return Direction.NorthEast
-        elif dx == 0 and dy > 0:
-            return Direction.South
-        elif dx == 0 and dy < 0:
-            return Direction.NorthEast
-        elif dx > 0 and dy == 0:
-            return Direction.East
-        elif dx < 0 and dy == 0:
-            return Direction.West
-        return None
-
-    def get_normalized_offset(self) -> Tuple[int, int]:
-        dx = 0
-        dy = 0
-
-        if self == Direction.North or self == Direction.NorthEast or self == Direction.NorthWest:
-            dy = 1
-        elif self == Direction.South or self == Direction.SouthEast or self == Direction.SouthWest:
-            dy = -1
-        if self == Direction.East or self == Direction.NorthEast or self == Direction.SouthEast:
-            dx = 1
-        elif self == Direction.West or self == Direction.NorthWest or self == Direction.SouthWest:
-            dx = -1
-
-        return dx, dy
-
-
-@dataclass(frozen=True)
-class Position:
-    x: int
-    y: int
-
-    def __str__(self):
-        return f'{self.x}, {self.y}'
-
-    def calculate_distance(self, other_position: 'Position') -> float:
-        return sqrt((self.x - other_position.x) ** 2 + (self.y - other_position.y) ** 2)
-
-    def increment(self, dx: int, dy: int) -> 'Position':
-        return Position(self.x + dx, self.y + dy)
+    from lib.game.enums import GameObjectType
+    from lib.game.map import Position
 
 
 class Map:
@@ -91,7 +28,7 @@ class Map:
         self.__objects: Dict[UUID, 'GameObject'] = dict()
         self.__map: Dict['Position', List] = defaultdict(list)
         self.__reversed_map: Dict[UUID, 'Position'] = dict()
-        self.__object_types: Dict[GameObjectType, List] = defaultdict(list)
+        self.__object_types: Dict['GameObjectType', List] = defaultdict(list)
 
     @property
     def size_x(self) -> int:

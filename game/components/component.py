@@ -1,4 +1,3 @@
-from abc import ABC
 from abc import abstractmethod
 from typing import Generic
 from typing import Iterable
@@ -6,22 +5,13 @@ from typing import TYPE_CHECKING
 from typing import TypeVar
 
 from game.exceptions.component_exceptions import MissingComponentException
+from lib.game.state import ComponentState
 
 if TYPE_CHECKING:
     from game import GameContext
-    from game.components import ComponentType
+    from lib.game.enums import ComponentType
     from game.messages.game_message import GameMessage
     from game.objects import GameObject
-
-
-class ComponentState(ABC):
-    @abstractmethod
-    def __init__(self, component_type: 'ComponentType'):
-        self.__component_type = component_type
-
-    @property
-    def component_type(self) -> 'ComponentType':
-        return self.__component_type
 
 
 T = TypeVar('T', bound=ComponentState)

@@ -3,8 +3,8 @@ import pytest
 from game.exceptions import InvalidWorldSizeException
 from game.exceptions import OutOfMapException
 from game.map import Map
-from game.map import Position
 from game.objects.vacuum import Vacuum
+from lib.game.map import Position
 
 
 def test_create_game_map():

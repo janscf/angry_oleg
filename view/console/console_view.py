@@ -1,13 +1,13 @@
 from typing import TYPE_CHECKING
 
-from game.objects import GameObjectState
+from lib.game.state import GameObjectState
 from view.console.controls import ComponentViewFactory
 from view.console.controls.menu import Menu
 from view.console.controls.menu import SubMenuItem
 from view.console.screen import Screen
 
 if TYPE_CHECKING:
-    from game import GameState
+    from lib.game.state import GameState
 
 
 class ConsoleView:
@@ -23,6 +23,7 @@ class ConsoleView:
                 continue
 
             self.__show_object_state(object_state)
+            self.__show_menu(object_state)
             input()
 
     def __show_object_state(self, object_state: 'GameObjectState'):

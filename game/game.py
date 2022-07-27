@@ -1,6 +1,5 @@
 from dataclasses import dataclass
 from datetime import datetime
-from typing import List
 from typing import Optional
 from typing import TYPE_CHECKING
 from uuid import UUID
@@ -8,10 +7,10 @@ from uuid import uuid4
 
 from game.map.builder import MapBuilder
 from game.messages.update_state_message import UpdateStateMessage
+from lib.game.state import GameState
 
 if TYPE_CHECKING:
     from game.map import Map
-    from game.objects import GameObjectState
 
 
 @dataclass(frozen=True)
@@ -33,25 +32,6 @@ class GameContext:
     @property
     def map(self) -> 'Map':
         return self.__game.map
-
-
-class GameState:
-    def __init__(self, turn: int, object_states: List['GameObjectState'], player: PlayerDescriptor):
-        self.__turn = turn
-        self.__object_states = object_states
-        self.__player = player
-
-    @property
-    def turn(self) -> int:
-        return self.__turn
-
-    @property
-    def object_states(self) -> List['GameObjectState']:
-        return self.__object_states
-
-    @property
-    def player(self) -> PlayerDescriptor:
-        return self.__player
 
 
 class Game:

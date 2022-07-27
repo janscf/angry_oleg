@@ -3,7 +3,7 @@ from typing import Generic
 from typing import Optional
 from typing import TypeVar
 
-from game.components import ComponentState
+from lib.game.state import ComponentState
 from view.console.controls.menu import Menu
 
 T = TypeVar('T', bound=ComponentState)

@@ -2,9 +2,9 @@ from typing import TYPE_CHECKING
 
 from game.components.detector import Detector
 from game.components.solid_body import SolidBody
-from game.map import Direction
 from game.objects import GameObject
-from game.objects import GameObjectType
+from lib.game.enums import Direction
+from lib.game.enums import GameObjectType
 
 if TYPE_CHECKING:
     pass

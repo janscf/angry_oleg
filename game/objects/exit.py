@@ -1,5 +1,5 @@
 from game.objects import GameObject
-from game.objects import GameObjectType
+from lib.game.enums import GameObjectType
 
 
 class Exit(GameObject):

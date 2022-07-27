@@ -1,32 +1,16 @@
 from typing import TYPE_CHECKING
 
 from game.components import Component
-from game.components import ComponentState
-from game.components import ComponentType
 from game.messages.collision_message import CollisionMessage
 from game.messages.update_state_message import UpdateStateMessage
+from lib.game.enums import ComponentType
+from lib.game.state.components import SolidBodyState
 
 if TYPE_CHECKING:
     from game import GameContext
-    from game.map import Direction
-    from game.map import Position
+    from lib.game.enums import Direction
     from game.messages import GameMessage
     from game.objects import GameObject
-
-
-class SolidBodyState(ComponentState):
-    def __init__(self, position: 'Position', direction: 'Direction' = None):
-        super(SolidBodyState, self).__init__(ComponentType.SolidBody)
-        self.__position = position
-        self.__direction = direction
-
-    @property
-    def position(self) -> 'Position':
-        return self.__position
-
-    @property
-    def direction(self) -> 'Direction':
-        return self.__direction
 
 
 class SolidBody(Component[SolidBodyState]):

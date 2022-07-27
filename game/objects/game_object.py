@@ -8,38 +8,14 @@ from uuid import UUID
 from uuid import uuid4
 
 from game.exceptions import DuplicateComponentException
+from lib.game.state import GameObjectState
 
 if TYPE_CHECKING:
     from game import GameContext
     from game.components import Component
-    from game.components import ComponentState
-    from game.components import ComponentType
+    from lib.game.enums import ComponentType
     from game.messages import GameMessage
-    from game.objects import GameObjectType
-
-
-class GameObjectState:
-    def __init__(
-        self,
-        object_id: UUID,
-        object_type: 'GameObjectType',
-        component_states: List['ComponentState'],
-    ):
-        self.__object_id = object_id
-        self.__object_type = object_type
-        self.__component_states = component_states
-
-    @property
-    def object_id(self) -> Optional[UUID]:
-        return self.__object_id
-
-    @property
-    def object_type(self) -> Optional['GameObjectType']:
-        return self.__object_type
-
-    @property
-    def component_states(self) -> List['ComponentState']:
-        return self.__component_states
+    from lib.game.enums import GameObjectType
 
 
 class GameObject(ABC):

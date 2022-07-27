@@ -6,12 +6,12 @@ from typing import TYPE_CHECKING
 from uuid import UUID
 from uuid import uuid4
 
-from lib.game.map.builder import MapBuilder
-from lib.game.messages.update_state_message import UpdateStateMessage
+from game.map.builder import MapBuilder
+from game.messages.update_state_message import UpdateStateMessage
 
 if TYPE_CHECKING:
-    from lib.game.map import Map
-    from lib.game.objects import GameObjectState
+    from game.map import Map
+    from game.objects import GameObjectState
 
 
 @dataclass(frozen=True)

@@ -1,8 +1,8 @@
 import random
 from abc import ABC
 
-from lib.game.map import Map
-from lib.game.objects.exit import Exit
+from game.map import Map
+from game.objects.exit import Exit
 
 
 class MapBuilder(ABC):

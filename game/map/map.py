@@ -11,12 +11,12 @@ from typing import TYPE_CHECKING
 from typing import Tuple
 from uuid import UUID
 
-from lib.game.exceptions import InvalidWorldSizeException
-from lib.game.exceptions import OutOfMapException
-from lib.game.objects import GameObjectType
+from game.exceptions import InvalidWorldSizeException
+from game.exceptions import OutOfMapException
+from game.objects import GameObjectType
 
 if TYPE_CHECKING:
-    from lib.game.objects import GameObject
+    from game.objects import GameObject
 
 
 class Direction(Enum):

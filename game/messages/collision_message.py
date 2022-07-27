@@ -1,6 +1,6 @@
 from uuid import UUID
 
-from lib.game.messages.game_message import GameMessage
+from game.messages.game_message import GameMessage
 
 
 class CollisionMessage(GameMessage):

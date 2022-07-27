@@ -5,13 +5,13 @@ from typing import Iterable
 from typing import TYPE_CHECKING
 from typing import TypeVar
 
-from lib.game.exceptions.component_exceptions import MissingComponentException
+from game.exceptions.component_exceptions import MissingComponentException
 
 if TYPE_CHECKING:
-    from lib.game import GameContext
-    from lib.game.components import ComponentType
-    from lib.game.messages.game_message import GameMessage
-    from lib.game.objects import GameObject
+    from game import GameContext
+    from game.components import ComponentType
+    from game.messages.game_message import GameMessage
+    from game.objects import GameObject
 
 
 class ComponentState(ABC):

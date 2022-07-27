@@ -1,5 +1,5 @@
-from lib.game.objects import GameObject
-from lib.game.objects import GameObjectType
+from game.objects import GameObject
+from game.objects import GameObjectType
 
 
 class Exit(GameObject):

@@ -1,6 +1,6 @@
-from lib.game import Game
-from lib.game.objects.player import Player
-from lib.view import ConsoleView
+from game import Game
+from game.objects.player import Player
+from view import ConsoleView
 
 if __name__ == '__main__':
     game = Game()

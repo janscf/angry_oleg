@@ -1,13 +1,13 @@
 from typing import TYPE_CHECKING
 
-from lib.game.objects import GameObjectState
-from lib.view.console.controls import ComponentViewFactory
-from lib.view.console.controls.menu import Menu
-from lib.view.console.controls.menu import SubMenuItem
-from lib.view.console.screen import Screen
+from game.objects import GameObjectState
+from view.console.controls import ComponentViewFactory
+from view.console.controls.menu import Menu
+from view.console.controls.menu import SubMenuItem
+from view.console.screen import Screen
 
 if TYPE_CHECKING:
-    from lib.game import GameState
+    from game import GameState
 
 
 class ConsoleView:

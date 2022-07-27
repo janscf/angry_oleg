@@ -5,17 +5,17 @@ from typing import Iterable
 from typing import Optional
 from typing import TYPE_CHECKING
 
-from lib.game.components import Component
-from lib.game.components import ComponentState
-from lib.game.components import ComponentType
-from lib.game.messages.update_state_message import UpdateStateMessage
+from game.components import Component
+from game.components import ComponentState
+from game.components import ComponentType
+from game.messages.update_state_message import UpdateStateMessage
 
 if TYPE_CHECKING:
-    from lib.game import GameContext
-    from lib.game.map import Direction
-    from lib.game.messages import GameMessage
-    from lib.game.objects import GameObject
-    from lib.game.objects import GameObjectType
+    from game import GameContext
+    from game.map import Direction
+    from game.messages import GameMessage
+    from game.objects import GameObject
+    from game.objects import GameObjectType
 
 
 class SignalLevel(Enum):

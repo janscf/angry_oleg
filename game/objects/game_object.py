@@ -7,15 +7,15 @@ from typing import TYPE_CHECKING
 from uuid import UUID
 from uuid import uuid4
 
-from lib.game.exceptions import DuplicateComponentException
+from game.exceptions import DuplicateComponentException
 
 if TYPE_CHECKING:
-    from lib.game import GameContext
-    from lib.game.components import Component
-    from lib.game.components import ComponentState
-    from lib.game.components import ComponentType
-    from lib.game.messages import GameMessage
-    from lib.game.objects import GameObjectType
+    from game import GameContext
+    from game.components import Component
+    from game.components import ComponentState
+    from game.components import ComponentType
+    from game.messages import GameMessage
+    from game.objects import GameObjectType
 
 
 class GameObjectState:

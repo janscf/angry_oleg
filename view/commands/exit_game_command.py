@@ -1,4 +1,4 @@
-from lib.view.commands import Command
+from view.commands import Command
 
 
 class ExitGameCommand(Command):

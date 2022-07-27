@@ -1,12 +1,12 @@
 from typing import Optional
 
-from lib.game.components.solid_body import SolidBodyState
-from lib.game.map import Direction
-from lib.view.console.controls.components.component_state_view import ComponentStateView
-from lib.view.console.controls.direction_label import DirectionLabel
-from lib.view.console.controls.menu import Menu
-from lib.view.console.controls.menu import MenuItem
-from lib.view.console.screen import Screen
+from game.components.solid_body import SolidBodyState
+from game.map import Direction
+from view.console.controls.components.component_state_view import ComponentStateView
+from view.console.controls.direction_label import DirectionLabel
+from view.console.controls.menu import Menu
+from view.console.controls.menu import MenuItem
+from view.console.screen import Screen
 
 
 class SolidBodyView(ComponentStateView[SolidBodyState]):

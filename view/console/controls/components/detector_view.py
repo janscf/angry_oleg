@@ -1,8 +1,8 @@
-from lib.game.components.detector import DetectorState
-from lib.game.components.detector import SignalLevel
-from lib.view.console.controls.components.component_state_view import ComponentStateView
-from lib.view.console.controls.direction_label import DirectionLabel
-from lib.view.console.screen import Screen
+from game.components.detector import DetectorState
+from game.components.detector import SignalLevel
+from view.console.controls.components.component_state_view import ComponentStateView
+from view.console.controls.direction_label import DirectionLabel
+from view.console.screen import Screen
 
 
 class DetectorView(ComponentStateView[DetectorState]):

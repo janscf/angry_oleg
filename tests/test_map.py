@@ -1,10 +1,10 @@
 import pytest
 
-from lib.game.exceptions import InvalidWorldSizeException
-from lib.game.exceptions import OutOfMapException
-from lib.game.map import Map
-from lib.game.map import Position
-from lib.game.objects.vacuum import Vacuum
+from game.exceptions import InvalidWorldSizeException
+from game.exceptions import OutOfMapException
+from game.map import Map
+from game.map import Position
+from game.objects.vacuum import Vacuum
 
 
 def test_create_game_map():

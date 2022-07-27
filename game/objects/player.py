@@ -1,10 +1,10 @@
 from typing import TYPE_CHECKING
 
-from lib.game.components.detector import Detector
-from lib.game.components.solid_body import SolidBody
-from lib.game.map import Direction
-from lib.game.objects import GameObject
-from lib.game.objects import GameObjectType
+from game.components.detector import Detector
+from game.components.solid_body import SolidBody
+from game.map import Direction
+from game.objects import GameObject
+from game.objects import GameObjectType
 
 if TYPE_CHECKING:
     pass

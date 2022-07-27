@@ -1,4 +1,4 @@
-from lib.game.map import Direction
+from game.map import Direction
 
 
 class DirectionLabel:

@@ -17,13 +17,12 @@ class ConsoleView:
         Screen.clear_console()
         Screen.display(self.TURN_NUMBER_MESSAGE.format(turn_number=game_state.turn))
 
-        player = game_state.player
+        player = game_state.player_state
         for object_state in game_state.object_states:
             if object_state.object_id != player.object_id:
                 continue
 
             self.__show_object_state(object_state)
-            self.__show_menu(object_state)
             input()
 
     def __show_object_state(self, object_state: 'GameObjectState'):

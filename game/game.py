@@ -57,7 +57,7 @@ class Game:
         return GameState(
             turn=self.__turn,
             object_states=all_object_states,
-            player=self.__player,
+            player_state=self.__player,
         )
 
     def is_active(self) -> bool:

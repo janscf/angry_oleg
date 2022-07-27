@@ -1,17 +1,13 @@
 from dataclasses import dataclass
-from enum import Enum
-from enum import auto
 from typing import Iterable
+from typing import TYPE_CHECKING
 
 from lib.game.enums import ComponentType
-from lib.game.enums import Direction
 from lib.game.state import ComponentState
 
-
-class SignalLevel(Enum):
-    High = auto()
-    Average = auto()
-    Low = auto()
+if TYPE_CHECKING:
+    from lib.game.enums import Direction
+    from lib.game.enums import SignalLevel
 
 
 @dataclass(frozen=True)
@@ -20,11 +16,10 @@ class TargetSignal:
     signal_level: 'SignalLevel'
 
 
+@dataclass
 class DetectorState(ComponentState):
+    targets: Iterable[TargetSignal]
+
     def __init__(self, targets: Iterable[TargetSignal]):
         super(DetectorState, self).__init__(ComponentType.Detector)
-        self.__targets = targets
-
-    @property
-    def targets(self):
-        return self.__targets
+        self.targets = targets

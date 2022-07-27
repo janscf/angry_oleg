@@ -4,8 +4,8 @@ from typing import TYPE_CHECKING
 from game.components import Component
 from game.messages.update_state_message import UpdateStateMessage
 from lib.game.enums import ComponentType
+from lib.game.enums import SignalLevel
 from lib.game.state.components import DetectorState
-from lib.game.state.components.detector import SignalLevel
 from lib.game.state.components.detector import TargetSignal
 
 if TYPE_CHECKING:

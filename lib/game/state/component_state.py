@@ -1,14 +1,10 @@
-from abc import ABC
-from abc import abstractmethod
+from dataclasses import dataclass
+from typing import TYPE_CHECKING
 
-from lib.game.enums import ComponentType
+if TYPE_CHECKING:
+    from lib.game.enums import ComponentType
 
 
-class ComponentState(ABC):
-    @abstractmethod
-    def __init__(self, component_type: 'ComponentType'):
-        self.__component_type = component_type
-
-    @property
-    def component_type(self) -> 'ComponentType':
-        return self.__component_type
+@dataclass
+class ComponentState:
+    component_type: 'ComponentType'

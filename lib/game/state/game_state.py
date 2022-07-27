@@ -1,22 +1,13 @@
-from typing import List
+from dataclasses import dataclass
+from typing import Iterable
+from typing import TYPE_CHECKING
 
-from lib.game.state import GameObjectState
+if TYPE_CHECKING:
+    from lib.game.state import GameObjectState
 
 
+@dataclass(frozen=True)
 class GameState:
-    def __init__(self, turn: int, object_states: List['GameObjectState'], player: GameObjectState):
-        self.__turn = turn
-        self.__object_states = object_states
-        self.__player = player
-
-    @property
-    def turn(self) -> int:
-        return self.__turn
-
-    @property
-    def object_states(self) -> List['GameObjectState']:
-        return self.__object_states
-
-    @property
-    def player(self) -> GameObjectState:
-        return self.__player
+    turn: int
+    object_states: Iterable['GameObjectState']
+    player_state: 'GameObjectState'

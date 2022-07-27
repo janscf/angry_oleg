@@ -10,11 +10,11 @@ from uuid import UUID
 from game.exceptions import InvalidWorldSizeException
 from game.exceptions import OutOfMapException
 from lib.game.enums import Direction
+from lib.game.map import Position
 
 if TYPE_CHECKING:
     from game.objects import GameObject
     from lib.game.enums import GameObjectType
-    from lib.game.map import Position
 
 
 class Map:

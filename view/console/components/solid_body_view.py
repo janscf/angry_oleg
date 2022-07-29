@@ -1,5 +1,6 @@
 from typing import Optional
 
+from client.commands import MoveCommand
 from lib.game.enums import Direction
 from lib.game.state.components import SolidBodyState
 from view.console.components import ComponentView
@@ -20,10 +21,10 @@ class _Texts:
 
 
 class SolidBodyView(ComponentView[SolidBodyState]):
-    def render(self):
-        messages = [_Texts.POSITION_MESSAGE.format(coordinates=str(self.state.position))]
-        if self.state.direction:
-            direction_label = DirectionLabel(self.state.direction)
+    def render(self, state: SolidBodyState):
+        messages = [_Texts.POSITION_MESSAGE.format(coordinates=str(state.position))]
+        if state.direction:
+            direction_label = DirectionLabel(state.direction)
             messages.append(_Texts.DIRECTION_MESSAGE.format(direction=direction_label))
         else:
             messages.append(_Texts.DIRECTION_NOT_SET_MESSAGE)
@@ -42,6 +43,8 @@ class SolidBodyView(ComponentView[SolidBodyState]):
                     title=_Texts.MOVE_MENU_CHANGE_DIRECTION_LABEL.format(
                         direction=direction_label,
                     ),
+                    command=MoveCommand(self._game_client),
+                    payload=direction,
                 )
             )
 

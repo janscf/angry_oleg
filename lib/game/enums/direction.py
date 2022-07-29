@@ -38,9 +38,9 @@ class Direction(Enum):
         dy = 0
 
         if self == Direction.North or self == Direction.NorthEast or self == Direction.NorthWest:
-            dy = 1
-        elif self == Direction.South or self == Direction.SouthEast or self == Direction.SouthWest:
             dy = -1
+        elif self == Direction.South or self == Direction.SouthEast or self == Direction.SouthWest:
+            dy = 1
         if self == Direction.East or self == Direction.NorthEast or self == Direction.SouthEast:
             dx = 1
         elif self == Direction.West or self == Direction.NorthWest or self == Direction.SouthWest:

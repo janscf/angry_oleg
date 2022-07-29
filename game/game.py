@@ -43,8 +43,12 @@ class Game:
         self.__map = None
         self.__player: Optional[PlayerDescriptor] = None
 
-    def add_player(self, object_id: UUID, name: str):
+    def add_player(self, object_id: UUID, name: str) -> PlayerDescriptor:
         self.__player = PlayerDescriptor(object_id=object_id, player_id=uuid4(), player_name=name)
+        return self.__player
+
+    def get_player(self, player_id: UUID) -> PlayerDescriptor:
+        return self.__player
 
     @property
     def map(self) -> Optional['Map']:

@@ -23,10 +23,11 @@ class MenuItem:
 
 
 class Menu:
-    def __init__(self, title: str = '', menu_items: List[MenuItem] = None):
+    def __init__(self, title: str = '', menu_items: List[MenuItem] = None, default_input: str = None):
         self.__title = title
         self.__menu_items = menu_items or []
         self.selected_item = None
+        self.default_input = default_input
 
     @property
     def title(self) -> str:
@@ -49,7 +50,7 @@ class Menu:
     def __wait_for_user_input(self) -> MenuItem:
         selected_item = None
         while selected_item is None:
-            shortcut = input().strip()
+            shortcut = input().strip() or self.default_input
             selected_item = self.__get_selected_item(shortcut=shortcut)
 
         return selected_item

@@ -16,10 +16,10 @@ class _Texts:
 
 
 class DetectorView(ComponentView[DetectorState]):
-    def render(self):
+    def render(self, state: DetectorState):
         messages = []
-        if self.state.targets:
-            for target in self.state.targets:
+        if state.targets:
+            for target in state.targets:
                 direction_label = DirectionLabel(target.direction)
                 messages.append(_Texts.DETECTOR_MESSAGE.format(direction=direction_label))
                 messages.append(_Texts.SIGNAL_MESSAGE[target.signal_level])

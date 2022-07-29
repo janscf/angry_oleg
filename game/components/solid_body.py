@@ -1,6 +1,7 @@
 from typing import TYPE_CHECKING
 
 from game.components import Component
+from game.messages import ChangeDirectionMessage
 from game.messages.collision_message import CollisionMessage
 from game.messages.update_state_message import UpdateStateMessage
 from lib.game.enums import ComponentType
@@ -30,6 +31,8 @@ class SolidBody(Component[SolidBodyState]):
         if isinstance(message, UpdateStateMessage):
             self.__move(context, self.__direction)
             self.__detect_collisions(context)
+        elif isinstance(message, ChangeDirectionMessage):
+            self.__direction = message.new_direction
 
     def __detect_collisions(self, game_context: 'GameContext'):
         game_map = game_context.map

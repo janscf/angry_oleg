@@ -1,1 +1,2 @@
+from .change_direction_message import ChangeDirectionMessage
 from .game_message import GameMessage

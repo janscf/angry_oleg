@@ -1,4 +1,4 @@
-from view.commands import Command
+from client.commands import Command
 
 
 class ExitGameCommand(Command):

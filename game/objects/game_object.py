@@ -53,7 +53,7 @@ class GameObject(ABC):
         self.__state = GameObjectState(
             object_id=self.id,
             object_type=self.type,
-            component_states=[component.get_state(context) for component in self._components],
+            components=[component.get_state(context) for component in self._components],
         )
 
     def __process_all_message(self, context: 'GameContext'):

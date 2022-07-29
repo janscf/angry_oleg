@@ -38,6 +38,9 @@ class Map:
     def size_y(self) -> int:
         return self.__size_y
 
+    def get_object(self, object_id: UUID) -> Optional['GameObject']:
+        return self.__objects.get(object_id)
+
     def find_object(self, object_id: UUID) -> Optional['Position']:
         return self.__reversed_map.get(object_id)
 

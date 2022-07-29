@@ -22,7 +22,7 @@ class MatchParameters:
 class PlayerDescriptor:
     player_id: UUID
     object_id: UUID
-    name: str
+    player_name: str
 
 
 class GameContext:
@@ -41,10 +41,10 @@ class Game:
         self.__end_time: Optional[datetime] = None
         self.__context = GameContext(self)
         self.__map = None
-        self.__player = None
+        self.__player: Optional[PlayerDescriptor] = None
 
     def add_player(self, object_id: UUID, name: str):
-        self.__player = PlayerDescriptor(object_id=object_id, player_id=uuid4(), name=name)
+        self.__player = PlayerDescriptor(object_id=object_id, player_id=uuid4(), player_name=name)
 
     @property
     def map(self) -> Optional['Map']:
@@ -54,10 +54,11 @@ class Game:
         all_object_states = [
             game_object.get_state() for game_object in self.__map.get_all_objects()
         ]
+        player_object = self.map.get_object(self.__player.object_id)
         return GameState(
             turn=self.__turn,
             object_states=all_object_states,
-            player_state=self.__player,
+            player_state=player_object.get_state(),
         )
 
     def is_active(self) -> bool:

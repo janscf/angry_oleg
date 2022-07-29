@@ -1,7 +1,7 @@
 from lib.game.enums import Direction
 
 
-class DirectionLabel:
+class _Texts:
     DIRECTION_TEXT = {
         Direction.North: 'север',
         Direction.South: 'юг',
@@ -13,8 +13,10 @@ class DirectionLabel:
         Direction.SouthEast: 'юго-восток',
     }
 
+
+class DirectionLabel:
     def __init__(self, direction: 'Direction'):
-        self.__label = self.DIRECTION_TEXT[direction]
+        self.__label = _Texts.DIRECTION_TEXT[direction]
 
     def __str__(self) -> str:
         return self.__label

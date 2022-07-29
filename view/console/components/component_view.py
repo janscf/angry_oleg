@@ -4,12 +4,13 @@ from typing import Optional
 from typing import TypeVar
 
 from lib.game.state import ComponentState
-from view.console.controls.menu import Menu
+from view.console.controls import Menu
+from view.console.screen import Screen
 
 T = TypeVar('T', bound=ComponentState)
 
 
-class ComponentStateView(Generic[T]):
+class ComponentView(Generic[T]):
     def __init__(self, component_state: 'ComponentState'):
         self.__state: T = component_state
 
@@ -18,8 +19,11 @@ class ComponentStateView(Generic[T]):
         return self.__state
 
     @abstractmethod
-    def show_state(self):
+    def render(self) -> str:
         raise NotImplementedError('Not implemented')
 
-    def get_actions_menu(self) -> Optional[Menu]:
+    def show(self):
+        Screen.display(self.render())
+
+    def get_menu(self) -> Optional[Menu]:
         return None

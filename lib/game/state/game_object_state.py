@@ -12,4 +12,4 @@ if TYPE_CHECKING:
 class GameObjectState:
     object_id: UUID
     object_type: 'GameObjectType'
-    component_states: Iterable['ComponentState']
+    components: Iterable['ComponentState']
